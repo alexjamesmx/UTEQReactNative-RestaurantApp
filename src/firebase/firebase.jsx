@@ -16,12 +16,12 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: Constants.manifest.extra.apiKey2,
-  authDomain: Constants.manifest.extra.authDomain2,
-  projectId: Constants.manifest.extra.projectId2,
-  storageBucket: Constants.manifest.extra.storageBucket2,
-  messagingSenderId: Constants.manifest.extra.messagingSenderId2,
-  appId: Constants.manifest.extra.appId2,
+  apiKey: Constants.manifest.extra.apiKey,
+  authDomain: Constants.manifest.extra.authDomain,
+  projectId: Constants.manifest.extra.projectId,
+  storageBucket: Constants.manifest.extra.storageBucket,
+  messagingSenderId: Constants.manifest.extra.messagingSenderId,
+  appId: Constants.manifest.extra.appId,
 };
 
 // Initialize Firebase

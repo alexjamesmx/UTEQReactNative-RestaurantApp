@@ -2,7 +2,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {Icon} from "react-native-elements";
 import Restaurants from "../screens/restaurants";
 import Favorites from "../screens/favorites";
-import Account from "../screens/account";
+import AccountNavigation from "./accountNavigation";
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
@@ -10,6 +10,11 @@ export default function Navigation() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          backgroundColor: "#6C170D",
+        },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "green",
       }}
       initialRouteName="Restaurants"
     >
@@ -18,14 +23,17 @@ export default function Navigation() {
         component={Favorites}
         options={{
           tabBarLabel: "",
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              type="material-community"
-              name="heart"
-              color={color}
-              size={40}
-            />
-          ),
+          tabBarIcon: ({focused}) => {
+            const color = focused ? "yellow" : "#e1e1e1";
+            return (
+              <Icon
+                type="material-community"
+                name="heart"
+                color={color}
+                size={40}
+              />
+            );
+          },
         }}
       />
 
@@ -34,29 +42,35 @@ export default function Navigation() {
         component={Restaurants}
         options={{
           tabBarLabel: "",
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              type="material-community"
-              name="silverware"
-              color={color}
-              size={40}
-            />
-          ),
+          tabBarIcon: ({focused}) => {
+            const color = focused ? "yellow" : "#e1e1e1";
+            return (
+              <Icon
+                type="material-community"
+                name="silverware"
+                color={color}
+                size={40}
+              />
+            );
+          },
         }}
       />
       <Tab.Screen
         name="Account"
-        component={Account}
+        component={AccountNavigation}
         options={{
           tabBarLabel: "",
-          tabBarIcon: ({color, size}) => (
-            <Icon
-              type="material-community"
-              name="account"
-              color={color}
-              size={40}
-            />
-          ),
+          tabBarIcon: ({focused}) => {
+            const color = focused ? "yellow" : "#e1e1e1";
+            return (
+              <Icon
+                type="material-community"
+                name="account"
+                color={color}
+                size={40}
+              />
+            );
+          },
         }}
       />
     </Tab.Navigator>

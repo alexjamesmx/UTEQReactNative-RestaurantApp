@@ -1,17 +1,33 @@
-import {View,Text, StyleSheet} from "react-native";
-import React, {useState} from "react";
+import {View, Text, StyleSheet} from "react-native";
+import React, {useState, useEffect} from "react";
 import {Button, Input, Icon} from "react-native-elements";
 import {useFormik} from "formik";
 import {getAuth, createUserWithEmailAndPassword} from "firebase/auth";
 import {useNavigation} from "@react-navigation/native";
-import {Toast} from "react-native-toast-message/lib/src/Toast";
+import Toast from "react-native-toast-message";
 import * as Yup from "yup";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { registerNewUser } from "../../firebase/firebase";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {registerNewUser} from "../firebase/firebase";
+import { appcolor } from "../constatns/appcolor";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 export default function Register() {
+  useEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <FontAwesome5
+          name="arrow-left"
+          color="#222"
+          size={30}
+          style={{marginLeft: 20}}
+          onPress={navigation.goBack}
+        />
+      ),
+    });
+  }, [navigation]);
+
   function initialValues() {
     return {
-      name:'',
+      name: "",
       email: "",
       password: "",
       repeatPassword: "",
@@ -27,7 +43,7 @@ export default function Register() {
       repeatPassword: Yup.string()
         .required("La confirmacion es obligatoria")
         .oneOf([Yup.ref("password")], "Las contrasenas no coinciden"),
-        name: Yup.string().required('El nombre de usuario es obligatorio')
+      name: Yup.string().required("El nombre de usuario es obligatorio"),
     });
   }
   const [MuestraContra, setMuestraContra] = useState(false);
@@ -44,46 +60,47 @@ export default function Register() {
         const res = await createUserWithEmailAndPassword(
           auth,
           formValue.email,
-          formValue.password,
+          formValue.password
         );
-        
+
         const newUser = await registerNewUser({
           uid: res.user.uid,
           name: formValue.name,
-          favorites: {}
-        })
-          
+          favorites: {},
+        });
+
         navigation.goBack();
       } catch (error) {
         Toast.show({
           type: "error",
-          position: "bottom",
-          text1: "Error al registrarse, intentelo mas tarde",
+          position: "top",
+          text1: "Error al registrarse, intentalo mas tarde",
         });
         console.log(error);
       }
-
     },
-
-
-    
   });
 
-  return (
-    <SafeAreaView styles={styles.content}>
 
-      <Text>Registrate</Text>
+  return (
+    <SafeAreaView style={styles.content}>
+      <View style={styles.contentForm}>
+      <Text style={styles.loginTitle}>Crea un usuario</Text>
       <Input
-        placeholder="Nombre de usuario"
+        placeholder="Nombre"
         containerStyle={styles.input}
         rightIcon={
-          <Icon type="material-community" name="account" iconStyle={styles.icon} />
+          <Icon
+            type="material-community"
+            name="account"
+            iconStyle={styles.icon}
+          />
         }
         onChangeText={(text) => formik.setFieldValue("name", text)}
         errorMessage={formik.errors.name}
       />
       <Input
-        placeholder="Correo electronico"
+        placeholder="Correo electrónico"
         containerStyle={styles.input}
         rightIcon={
           <Icon type="material-community" name="at" iconStyle={styles.icon} />
@@ -92,7 +109,7 @@ export default function Register() {
         errorMessage={formik.errors.email}
       />
       <Input
-        placeholder="Contrasena"
+        placeholder="Contraseña"
         containerStyle={styles.input}
         secureTextEntry={MuestraContra ? false : true}
         rightIcon={
@@ -107,7 +124,7 @@ export default function Register() {
         errorMessage={formik.errors.password}
       />
       <Input
-        placeholder="Repetir contrasena"
+        placeholder="Repetir contraseña"
         containerStyle={styles.input}
         secureTextEntry={MuestraContra ? false : true}
         rightIcon={
@@ -122,34 +139,58 @@ export default function Register() {
         errorMessage={formik.errors.repeatPassword}
       />
       <Button
-        title="Unirse"
+        title="Registrarse"
         containerStyle={styles.btnContainer}
-        buttonStyle={styles.btn}
+        buttonStyle={styles.btnLogin}
         onPress={formik.handleSubmit}
         loading={formik.isSubmitting}
       />
+      </View>
+       
+      <Toast />
     </SafeAreaView>
   );
 }
 
+
+
 const styles = StyleSheet.create({
-  btn: {
-    backgroundColor: "#00a688",
+  content:{
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: appcolor.background,
   },
-  btnContainer: {
-    marginBottom: 20,
-    width: "95%",
+  contentForm: {
+    flex: 1,
+    justifyContent: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
-  icon: {
-    color: "#ac1c1c1",
+  loginTitle: {
+    position: "absolute",
+    fontWeight: "bold",
+    fontSize: 42,
+    textAlign: "center",
+    top: -10,
+    left: 0,
+    right: 0,
+    bottom:0,
   },
   input: {
     width: "100%",
     marginTop: 20,
+    color: "green",
   },
-  content:{
-    flex:1,
-    paddingBottom:20,
-  }
-
-});
+  icon: {
+    color: "#12355B",
+  },
+  btnContainer: {
+    marginTop: 10,
+    color: "black",
+  },
+  btnLogin: {
+    backgroundColor: "#FF570A",
+    height: 50,
+    borderRadius: 16,
+  },
+})

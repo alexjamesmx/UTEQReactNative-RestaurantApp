@@ -47,6 +47,7 @@ export default {
       storageBucket2: process.env.STORAGE_BUCKET2,
       messagingSenderId2: process.env.MESSAGING_SENDER_ID2,
       appId2: process.env.APP_ID2,
+      appcolor:process.env.appcolor
     }
   }
 }
