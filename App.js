@@ -1,6 +1,6 @@
 import Navigation from './src/navigation/navigation';
 import { NavigationContainer } from '@react-navigation/native';
-// import  Constants  from 'expo-constants';
+import initfirebase from "./src/firebase/firebase"
 export default function App() {
   return (
     <NavigationContainer>
@@ -8,5 +8,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
 
 
