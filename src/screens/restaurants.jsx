@@ -1,9 +1,9 @@
-import { View,Text } from "react-native";
+import { View, Text } from 'react-native'
 
-export default function Restaurants(){
-    return (
-        <View>
-            <Text>Restaurantes</Text>
-        </View>
-    )
+export default function Restaurants () {
+  return (
+    <View>
+      <Text>Restaurantes</Text>
+    </View>
+  )
 }

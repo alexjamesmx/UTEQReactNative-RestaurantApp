@@ -1,3 +1,3 @@
 export const appcolor = {
-    background:'#e1e1e1'
-}
+  background: '#e1e1e1',
+};

@@ -1,20 +1,20 @@
-import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {Icon} from "react-native-elements";
-import Restaurants from "../screens/restaurants";
-import Favorites from "../screens/favorites";
-import AccountNavigation from "./accountNavigation";
-const Tab = createBottomTabNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { Icon } from 'react-native-elements'
+import Restaurants from '../screens/restaurants'
+import Favorites from '../screens/favorites'
+import AccountNavigation from './accountNavigation'
+const Tab = createBottomTabNavigator()
 
-export default function Navigation() {
+export default function Navigation () {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#6C170D",
+          backgroundColor: '#6C170D',
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "green",
+        tabBarActiveTintColor: 'green',
       }}
       initialRouteName="Restaurants"
     >
@@ -22,9 +22,9 @@ export default function Navigation() {
         name="Favorites"
         component={Favorites}
         options={{
-          tabBarLabel: "",
-          tabBarIcon: ({focused}) => {
-            const color = focused ? "yellow" : "#e1e1e1";
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => {
+            const color = focused ? 'yellow' : '#e1e1e1'
             return (
               <Icon
                 type="material-community"
@@ -32,7 +32,7 @@ export default function Navigation() {
                 color={color}
                 size={40}
               />
-            );
+            )
           },
         }}
       />
@@ -41,9 +41,9 @@ export default function Navigation() {
         name="Restaurants"
         component={Restaurants}
         options={{
-          tabBarLabel: "",
-          tabBarIcon: ({focused}) => {
-            const color = focused ? "yellow" : "#e1e1e1";
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => {
+            const color = focused ? 'yellow' : '#e1e1e1'
             return (
               <Icon
                 type="material-community"
@@ -51,7 +51,7 @@ export default function Navigation() {
                 color={color}
                 size={40}
               />
-            );
+            )
           },
         }}
       />
@@ -59,9 +59,9 @@ export default function Navigation() {
         name="Account"
         component={AccountNavigation}
         options={{
-          tabBarLabel: "",
-          tabBarIcon: ({focused}) => {
-            const color = focused ? "yellow" : "#e1e1e1";
+          tabBarLabel: '',
+          tabBarIcon: ({ focused }) => {
+            const color = focused ? 'yellow' : '#e1e1e1'
             return (
               <Icon
                 type="material-community"
@@ -69,10 +69,10 @@ export default function Navigation() {
                 color={color}
                 size={40}
               />
-            );
+            )
           },
         }}
       />
     </Tab.Navigator>
-  );
+  )
 }

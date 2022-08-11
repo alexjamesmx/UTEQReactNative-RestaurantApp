@@ -1,8 +1,9 @@
-import { Text } from "react-native-elements"
+import { Text } from 'react-native-elements'
 
-
-export default function Favorites(){
-    return (
-        <><Text>Favorites</Text></>
-    )
+export default function Favorites () {
+  return (
+    <>
+      <Text>Favorites</Text>
+    </>
+  )
 }
