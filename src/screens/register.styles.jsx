@@ -1,40 +1,37 @@
 import { StyleSheet } from 'react-native'
-import { appcolor } from '../constatns/appcolor'
+import { appcolor } from '../constants/appcolor'
 
 export const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
     backgroundColor: appcolor.background,
-    height: 1000,
   },
   contentForm: {
     flex: 1,
     justifyContent: 'center',
-    paddingVertical: 12,
     paddingHorizontal: 16,
   },
   loginTitle: {
     fontWeight: 'bold',
-    fontSize: 42,
+    fontSize: appcolor.titulo,
     textAlign: 'center',
     marginBottom: 50,
-    marginVertical: 40,
+    marginVertical: 20,
   },
   input: {
     width: '100%',
-    marginTop: 20,
     color: 'green',
   },
   icon: {
     color: '#12355B',
   },
   btnContainer: {
-    marginTop: 10,
+    marginTop: 20,
     color: 'black',
   },
   btnLogin: {
-    backgroundColor: '#FF570A',
+    backgroundColor: appcolor.boton,
     height: 50,
     borderRadius: 16,
   },

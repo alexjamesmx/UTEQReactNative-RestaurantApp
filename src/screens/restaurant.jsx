@@ -1,19 +1,22 @@
 import { useEffect, useState, useCallback } from 'react'
-import { getRestaurants } from '../firebase/firebase'
+import { getMenu } from '../firebase/firebase'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import RestaurantList from '../components/restaurants/RestaurantList'
 import { StyleSheet } from 'react-native'
+import MenuList from '../components/menu/MenuList'
 import { appcolor } from '../constants/appcolor'
+
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
-export default function Restaurants () {
-  const [restaurants, setRestaurants] = useState([])
+export default function RestaurantNavigation (props) {
+  const { route } = props
   const [refreshing, setRefreshing] = useState(false)
+  const [menu, setMenu] = useState([])
 
   useEffect(() => {
     ;(async () => {
-      setRestaurants(await getRestaurants())
+      console.log('recargando')
+      setMenu(await getMenu(route.params.id))
     })()
   }, [refreshing])
 
@@ -25,9 +28,10 @@ export default function Restaurants () {
   function handleRefresh () {
     onRefresh()
   }
+
   return (
     <SafeAreaView style={styles.container}>
-      <RestaurantList restaurants={restaurants} handleRefresh={handleRefresh} />
+      <MenuList menu={menu} getMenu={getMenu} handleRefresh={handleRefresh} />
     </SafeAreaView>
   )
 }

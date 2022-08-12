@@ -12,7 +12,7 @@ import * as ImagePicker from 'expo-image-picker'
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import useUser from '../../hooks/useUser'
-import { styles } from './userInfo.styles'
+import { styles } from './UserInfo.styles'
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
@@ -27,8 +27,6 @@ export default function UserInfo (props) {
     setRefreshing(true)
     wait(1000).then(() => setRefreshing(false))
   }, [])
-
-  console.log('final', finalUser)
 
   const { uid, photoURL } = getAuth().currentUser
   const [avatar, setAvatar] = useState(photoURL)
@@ -79,42 +77,36 @@ export default function UserInfo (props) {
     await signOut(auth)
   }
   return (
-    <ScrollView
-      contentContainerStyle={styles.scrollView}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    >
-      <View style={styles.cardContainer}>
-        <Avatar
-          size={150}
-          rounded
-          containerStyle={styles.avatar}
-          icon={{ type: 'material', name: 'person' }}
-          source={{ uri: avatar }}
-        >
-          <Avatar.Accessory size={24} onPress={cambiaAvatar} />
-        </Avatar>
-        {finalUser
-          ? (
-          <Text style={styles.title}>{finalUser.name}</Text>
-            )
-          : (
-          <Text style={styles.title}>Anonimo</Text>
-            )}
-        {finalUser
-          ? (
-          <Text style={styles.details}>Email: {finalUser.email}</Text>
-            )
-          : (
-          <></>
-            )}
-        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={{ color: 'white', fontWeight: 'bold' }}>
-            Cerrar sesión
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+    <View style={styles.cardContainer}>
+      <Avatar
+        size={150}
+        rounded
+        containerStyle={styles.avatar}
+        icon={{ type: 'material', name: 'person' }}
+        source={{ uri: avatar }}
+      >
+        <Avatar.Accessory size={24} onPress={cambiaAvatar} />
+      </Avatar>
+      {finalUser
+        ? (
+        <Text style={styles.subtitle}>{finalUser.name}</Text>
+          )
+        : (
+        <Text style={styles.subtitle}>Anonimo</Text>
+          )}
+      {finalUser
+        ? (
+        <Text style={styles.details}>Email: {finalUser.email}</Text>
+          )
+        : (
+        <></>
+          )}
+      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+        <Text style={{ color: 'white', fontWeight: 'bold' }}>
+          Cerrar sesión
+        </Text>
+      </TouchableOpacity>
+    </View>
+    // </ScrollView>
   )
 }

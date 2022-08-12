@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-// import { appcolor } from "../../constatns/appcolor";
+import { appcolor } from '../../constants/appcolor'
 
 export const styles = StyleSheet.create({
   content: {
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     color: 'black',
   },
   btnLogin: {
-    backgroundColor: '#FF570A',
+    backgroundColor: appcolor.boton,
     height: 50,
     borderRadius: 16,
     marginVertical: 16,
@@ -35,14 +35,14 @@ export const styles = StyleSheet.create({
   },
   loginTitle: {
     fontWeight: 'bold',
-    fontSize: 42,
+    fontSize: appcolor.titulo,
     textAlign: 'center',
     marginBottom: 24,
   },
   loginsubTitle: {
     position: 'relative',
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: appcolor.subtitle,
     textAlign: 'center',
   },
 })

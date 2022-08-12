@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { auth, getUserInfo } from '../firebase/firebase'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import UserInfo from '../components/account/userInfo'
-import Login from '../components/account/login'
+import UserInfo from '../components/account/UserInfo'
+import Login from '../components/account/Login'
 import LoadingModal from '../utils/loadingModal'
 import { styles } from './account.styles'
 import useUser from '../hooks/useUser'
+// import { styles } from './stylesglobales.styles'
+import { ScrollView, RefreshControl } from 'react-native'
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout))
+}
 export default function Account () {
   const [loading, setLoading] = useState(false)
   const [loggedIn, setLoggedIn] = useState(null)
+  const [refreshing, setRefreshing] = useState(false)
 
   const { setUser } = useUser(null)
 
@@ -27,7 +33,12 @@ export default function Account () {
         setUser(res)
       })()
     }
-  }, [auth, loggedIn])
+  }, [auth, loggedIn, refreshing])
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true)
+    wait(1000).then(() => setRefreshing(false))
+  }, [])
 
   if (!loggedIn) {
     return (
@@ -39,8 +50,15 @@ export default function Account () {
 
   return (
     <SafeAreaView style={styles.content}>
-      <UserInfo setLoading={setLoading} />
-      <LoadingModal show={loading} />
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <UserInfo setLoading={setLoading} />
+        <LoadingModal show={loading} />
+      </ScrollView>
     </SafeAreaView>
   )
 }

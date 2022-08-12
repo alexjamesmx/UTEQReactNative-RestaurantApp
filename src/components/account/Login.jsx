@@ -5,7 +5,8 @@ import { useFormik } from 'formik'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
-import { styles } from './login.styles'
+import { styles } from './Login.styles'
+import { login } from '../../firebase/firebase'
 import * as Yup from 'yup'
 
 export default function FormLogin () {
@@ -18,7 +19,9 @@ export default function FormLogin () {
 
   function validationSchema () {
     return Yup.object({
-      email: Yup.string().email('El formato no es valido').required('El correo es obligatorio'),
+      email: Yup.string()
+        .email('El formato no es valido')
+        .required('El correo es obligatorio'),
       password: Yup.string().required('La contrasena es obligatoria'),
     })
   }
@@ -32,24 +35,9 @@ export default function FormLogin () {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      try {
-        const auth = getAuth()
-        await signInWithEmailAndPassword(auth, formValue.email, formValue.password)
-        navigation.navigate('Account')
-
-        Toast.show({
-          type: 'success',
-          position: 'top',
-          text1: 'Bienvenido ' + formValue.email,
-        })
-      } catch (error) {
-        Toast.show({
-          type: 'error',
-          position: 'bottom',
-          text1: 'Usuario o contrasena incorrectos',
-        })
-        console.log(error)
-      }
+      const auth = getAuth()
+      await login(auth, formValue.email, formValue.password)
+      navigation.navigate('AccountScreen')
     },
   })
 
@@ -62,7 +50,9 @@ export default function FormLogin () {
         <Input
           placeholder="Correo electrónico"
           containerStyle={styles.input}
-          rightIcon={<Icon type="material-community" name="at" iconStyle={styles.icon} />}
+          rightIcon={
+            <Icon type="material-community" name="at" iconStyle={styles.icon} />
+          }
           onChangeText={(text) => formik.setFieldValue('email', text)}
           errorMessage={formik.errors.email}
         />
@@ -97,7 +87,7 @@ export default function FormLogin () {
             type="outline"
             titleStyle={{ color: '#12355B' }}
             onPress={() => {
-              navigation.navigate('Register')
+              navigation.navigate('RegisterScreen')
             }}
           />
         </View>

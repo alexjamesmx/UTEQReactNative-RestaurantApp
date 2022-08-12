@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { appcolor } from '../../constatns/appcolor'
+import { appcolor } from '../../constants/appcolor'
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
   cardContainer: {
     width: '80%',
     height: '80%',
-    backgroundColor: '#fff',
+    backgroundColor: '#e3e3e3',
     borderRadius: 16,
     padding: 16,
     shadowColor: '#00000030',
@@ -22,9 +22,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 8,
   },
-  title: {
+  subtitle: {
     color: '#181818',
-    fontSize: 24,
+    fontSize: appcolor.subtitle,
     fontWeight: 'bold',
     marginTop: 15,
     marginHorizontal: 20,
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
   },
   details: {
     color: '#181818',
-    fontSize: 16,
+    fontSize: appcolor.texto,
     marginTop: 15,
     marginHorizontal: 20,
     textAlign: 'center',
@@ -43,18 +43,12 @@ export const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#000',
+    backgroundColor: appcolor.negro,
     width: '100%',
     height: 35,
     borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 24,
-  },
-  scrollView: {
-    flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 })

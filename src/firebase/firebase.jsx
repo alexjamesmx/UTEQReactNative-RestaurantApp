@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import Constants from 'expo-constants'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import {
@@ -14,6 +14,8 @@ import {
   setDoc,
   deleteDoc,
 } from 'firebase/firestore'
+getUserInfo
+import { Toast } from 'react-native-toast-message/lib/src/Toast'
 
 const firebaseConfig = {
   apiKey: Constants.manifest.extra.apiKey,
@@ -63,6 +65,52 @@ export async function getUserInfo (uid) {
     })
 
     return user
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function login (auth, email, password) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password)
+
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Bienvenido ' + email,
+    })
+  } catch (error) {
+    Toast.show({
+      type: 'error',
+      position: 'bottom',
+      text1: 'Usuario o contrasena incorrectos',
+    })
+    console.log(error)
+  }
+}
+
+export async function getRestaurants () {
+  const restaurantes = []
+  try {
+    const querySnapshot = await getDocs(collection(db, 'restaurantes'))
+    querySnapshot.forEach((doc) => {
+      restaurantes.push(doc.data())
+    })
+    console.log('okey?:', restaurantes)
+    return restaurantes.reverse()
+  } catch (error) {}
+}
+
+export async function getMenu (id) {
+  const menu = []
+  try {
+    const q = query(collection(db, 'menus'), where('id', '==', id))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      menu.push(doc.data())
+    })
+    console.log('menu de: ', id, ' ,-->', menu)
+    return menu
   } catch (error) {
     console.log(error)
   }

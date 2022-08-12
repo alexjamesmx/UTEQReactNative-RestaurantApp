@@ -1,42 +1,23 @@
 import { View, Text, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Input, Icon } from 'react-native-elements'
 import { useFormik } from 'formik'
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
 import * as Yup from 'yup'
-import { registerNewUser, updateUser } from '../firebase/firebase'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-
+import { registerNewUser, updateUser, login } from '../firebase/firebase'
 import useUser from '../hooks/useUser'
 import { styles } from './register.styles'
 
 export default function Register () {
   //  CONTEXTO DE USUARIO
   const { setUser } = useUser(null)
-  // const { setUser } = useUser();
+
   //  CONTRASENAS
   const [MuestraContra, setMuestraContra] = useState(false)
   const MuestraOcultaContra = () => setMuestraContra((prevState) => !prevState)
   const navigation = useNavigation()
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerStyle: {
-        height: 100,
-      },
-      headerLeft: () => (
-        <FontAwesome5
-          name="arrow-left"
-          color="#222"
-          size={30}
-          style={{ marginLeft: 20 }}
-          onPress={navigation.goBack}
-        />
-      ),
-    })
-  }, [navigation])
 
   function initialValues () {
     return {
@@ -91,7 +72,8 @@ export default function Register () {
 
         setUser(user)
 
-        navigation()
+        await login(auth, formValue.email, formValue.password)
+        navigation.navigate('AccountScreen')
       } catch (error) {
         Toast.show({
           type: 'error',
