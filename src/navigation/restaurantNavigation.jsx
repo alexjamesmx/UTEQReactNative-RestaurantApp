@@ -37,16 +37,16 @@ export default function RestaurantNavigation (props) {
         options={{
           title: '',
           headerLeft: () => (
-            <SearchBar></SearchBar>
-            // <Ionicons
-            //   name="arrow-back"
-            //   size={32}
-            //   color={appcolor.appHeaderTextcolor}
-            //   style={{ marginLeft: 24 }}
-            //   onPress={() => {
-            //     navigation.navigate('RestaurantsScreen')
-            //   }}
-            // />
+            // <SearchBar></SearchBar>
+            <Ionicons
+              name="arrow-back"
+              size={32}
+              color={appcolor.appHeaderTextcolor}
+              style={{ marginLeft: 24 }}
+              onPress={() => {
+                navigation.navigate('RestaurantsScreen')
+              }}
+            />
           ),
         }}
       />

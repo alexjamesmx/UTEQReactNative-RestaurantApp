@@ -15,7 +15,6 @@ export default function RestaurantNavigation (props) {
 
   useEffect(() => {
     ;(async () => {
-      console.log('recargando')
       setMenu(await getMenu(route.params.id))
     })()
   }, [refreshing])

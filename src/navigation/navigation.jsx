@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
-
 import Favorites from '../screens/favorites'
 import AccountNavigation from './accountNavigation'
 import RestaurantNavigation from './restaurantNavigation'
 import { appcolor } from '../constants/appcolor'
+
 const Tab = createBottomTabNavigator()
 
 export default function Navigation () {

@@ -13,9 +13,14 @@ import {
   where,
   setDoc,
   deleteDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  deleteField,
 } from 'firebase/firestore'
-getUserInfo
 import { Toast } from 'react-native-toast-message/lib/src/Toast'
+import { lessThan } from 'react-native-reanimated'
+// getUserInfo
 
 const firebaseConfig = {
   apiKey: Constants.manifest.extra.apiKey,
@@ -32,6 +37,8 @@ export const initFirebase = initializeApp(firebaseConfig)
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
+
+// console.log('FIREBASE AUTH', auth)
 const db = getFirestore(app)
 
 export async function registerNewUser (user) {
@@ -96,7 +103,6 @@ export async function getRestaurants () {
     querySnapshot.forEach((doc) => {
       restaurantes.push(doc.data())
     })
-    console.log('okey?:', restaurantes)
     return restaurantes.reverse()
   } catch (error) {}
 }
@@ -109,9 +115,81 @@ export async function getMenu (id) {
     querySnapshot.forEach((doc) => {
       menu.push(doc.data())
     })
-    console.log('menu de: ', id, ' ,-->', menu)
+
     return menu
   } catch (error) {
     console.log(error)
   }
+}
+
+export async function addFavorites (restaurante, uid, docId) {
+  const exists = null
+  const res = await getFavorites(restaurante, uid)
+
+  // EXISTE FAVORITOS EN EL USUARIO ?
+  if (res) {
+    try {
+      await updateDoc(doc(db, 'users', docId), {
+        favoriteRestaurants: arrayRemove(restaurante),
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  } else {
+    try {
+      await updateDoc(doc(db, 'users', docId), {
+        favoriteRestaurants: arrayUnion(restaurante),
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return exists
+}
+
+export async function getFavorites (restaurante, uid) {
+  let exists = null
+  const q = query(
+    collection(db, 'users'),
+    where('favoriteRestaurants', 'array-contains', restaurante),
+    where('uid', '==', uid),
+  )
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    exists = doc.data()
+  })
+
+  return exists
+}
+
+export async function getAllFavorites (uid) {
+  let arrayFavorites = null
+  const q = query(collection(db, 'users'), where('uid', '==', uid))
+
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc, i) => {
+    // console.log(i)
+    // console.log(doc.data())
+    arrayFavorites = doc.data().favoriteRestaurants
+  })
+
+  console.log(arrayFavorites)
+
+  // Inner join id restuarante con arreglo de favoritos
+  // array
+  const queries = []
+  await Promise.all(
+    await arrayFavorites.map(async (item) => {
+      const qs = query(collection(db, 'restaurantes'), where('id', '==', item))
+
+      const queriesSnapshot = await getDocs(qs)
+
+      queriesSnapshot.forEach((doc) => {
+        queries.push(doc.data())
+      })
+    }),
+  )
+  return queries
 }

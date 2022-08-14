@@ -76,6 +76,7 @@ export default function UserInfo (props) {
     const auth = getAuth()
     await signOut(auth)
   }
+
   return (
     <View style={styles.cardContainer}>
       <Avatar

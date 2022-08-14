@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import { TouchableWithoutFeedback, View, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { appcolor } from '../../constants/appcolor'
-import { styles } from './RestaurantCard.styles'
+import { styles } from '../restaurants/RestaurantCard.styles'
 import { addFavorites, getFavorites } from '../../firebase/firebase'
 import useUser from '../../hooks/useUser'
 import { useState, useEffect } from 'react'
@@ -12,7 +12,12 @@ export default function RestaurantCard (props) {
   const { finalUser } = useUser(finalUser)
   const [exists, setExists] = useState(false)
   const goToRestaurant = () => {
-    navigation.navigate('RestaurantScreen', { id: restaurant.id })
+    navigation.navigate('Restaurants', {
+      screen: 'RestaurantScreen',
+      params: {
+        id: restaurant.id,
+      },
+    })
   }
 
   const handleFavorites = async () => {

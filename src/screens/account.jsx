@@ -7,7 +7,6 @@ import Login from '../components/account/Login'
 import LoadingModal from '../utils/loadingModal'
 import { styles } from './account.styles'
 import useUser from '../hooks/useUser'
-// import { styles } from './stylesglobales.styles'
 import { ScrollView, RefreshControl } from 'react-native'
 
 const wait = (timeout) => {
