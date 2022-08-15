@@ -193,3 +193,13 @@ export async function getAllFavorites (uid) {
   )
   return queries
 }
+
+export async function removeFavorites (restaurante, docId) {
+  try {
+    await updateDoc(doc(db, 'users', docId), {
+      favoriteRestaurants: arrayRemove(restaurante),
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}

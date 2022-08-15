@@ -33,6 +33,7 @@ export default function Restaurants () {
   }, [auth, loggedIn])
 
   useEffect(() => {
+    console.log('refrescando restaurantes')
     ;(async () => {
       setRestaurants(await getRestaurants())
       setFilteredDataSource(await getRestaurants())

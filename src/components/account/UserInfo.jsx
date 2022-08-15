@@ -1,11 +1,5 @@
 import { useState, useCallback } from 'react'
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  RefreshControl,
-} from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements'
 import { getAuth, signOut, updateProfile } from 'firebase/auth'
 import * as ImagePicker from 'expo-image-picker'
@@ -20,7 +14,7 @@ const wait = (timeout) => {
 
 export default function UserInfo (props) {
   const { setLoading } = props
-  const [refreshing, setRefreshing] = useState(false)
+  const [setRefreshing] = useState(false)
 
   const { finalUser } = useUser(finalUser)
   const onRefresh = useCallback(() => {
@@ -108,6 +102,5 @@ export default function UserInfo (props) {
         </Text>
       </TouchableOpacity>
     </View>
-    // </ScrollView>
   )
 }

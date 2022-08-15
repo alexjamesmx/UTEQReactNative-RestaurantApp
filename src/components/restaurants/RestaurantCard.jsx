@@ -11,6 +11,7 @@ export default function RestaurantCard (props) {
   const { restaurant } = props
   const { finalUser } = useUser(finalUser)
   const [exists, setExists] = useState(false)
+  const { finalRefresh, setFinalRefresh } = useUser(finalRefresh)
   const goToRestaurant = () => {
     navigation.navigate('RestaurantScreen', { id: restaurant.id })
   }
@@ -26,9 +27,11 @@ export default function RestaurantCard (props) {
     } else {
       setExists((prevState) => !prevState)
     }
+    setFinalRefresh((prevState) => !prevState)
   }
 
   useEffect(() => {
+    console.log('quitando corazon')
     ;(async () => {
       const res = await getFavorites(restaurant.id, finalUser.uid)
       if (res) {
@@ -37,7 +40,7 @@ export default function RestaurantCard (props) {
         setExists(false)
       }
     })()
-  }, [])
+  }, [finalRefresh])
 
   return (
     <TouchableWithoutFeedback>

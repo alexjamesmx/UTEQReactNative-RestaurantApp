@@ -4,7 +4,7 @@ import { appcolor } from '../../constants/appcolor'
 export const styles = StyleSheet.create({
   card: {
     flex: 1,
-    backgroundColor: appcolor.background,
+    backgroundColor: 'grey',
   },
   spacing: {
     flex: 1,

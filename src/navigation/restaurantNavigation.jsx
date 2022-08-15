@@ -4,7 +4,6 @@ import RestaurantScreen from '../screens/restaurant'
 import { Ionicons } from '@expo/vector-icons'
 import { appcolor } from '../constants/appcolor'
 import { useNavigation } from '@react-navigation/native'
-import { SearchBar } from 'react-native-elements'
 const Stack = createStackNavigator()
 
 export default function RestaurantNavigation (props) {
@@ -37,7 +36,6 @@ export default function RestaurantNavigation (props) {
         options={{
           title: '',
           headerLeft: () => (
-            // <SearchBar></SearchBar>
             <Ionicons
               name="arrow-back"
               size={32}
