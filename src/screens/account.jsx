@@ -48,16 +48,16 @@ export default function Account () {
   }
 
   return (
-    <SafeAreaView style={styles.content}>
-      <ScrollView
-        contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
-      >
-        <UserInfo setLoading={setLoading} />
-        <LoadingModal show={loading} />
-      </ScrollView>
-    </SafeAreaView>
+    // <SafeAreaView style={styles.content}>
+    <ScrollView
+      style={styles.content}
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <UserInfo setLoading={setLoading} onRefresh={onRefresh} />
+      <LoadingModal show={loading} />
+    </ScrollView>
   )
 }

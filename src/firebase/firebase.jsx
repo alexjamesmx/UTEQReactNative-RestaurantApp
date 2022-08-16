@@ -203,3 +203,16 @@ export async function removeFavorites (restaurante, docId) {
     console.log(error)
   }
 }
+
+export async function updateUserDetails (docId, phone, address) {
+  try {
+    const userRef = doc(db, 'users', docId)
+
+    await updateDoc(userRef, {
+      phone,
+      address,
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
