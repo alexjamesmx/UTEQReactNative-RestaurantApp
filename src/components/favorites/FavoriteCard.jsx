@@ -5,21 +5,20 @@ import { appcolor } from '../../constants/appcolor'
 import { styles } from '../restaurants/RestaurantCard.styles'
 import { removeFavorites, getFavorites } from '../../firebase/firebase'
 import useUser from '../../hooks/useUser'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
 export default function RestaurantCard (props) {
   const navigation = useNavigation()
   const { restaurant } = props
   const { finalUser } = useUser(finalUser)
-  const [setExists] = useState(false)
   const { finalRefresh, setFinalRefresh } = useUser(finalRefresh)
 
   const goToRestaurant = () => {
-    navigation.navigate('Restaurants', {
-      screen: 'RestaurantScreen',
-      params: {
-        id: restaurant.id,
-      },
+    // setComeFrom(true)
+    console.log('amos')
+    navigation.navigate('FavoriteRestaurantScreen', {
+      id: restaurant.id,
+      comeFrom: true,
     })
   }
 
@@ -30,12 +29,7 @@ export default function RestaurantCard (props) {
 
   useEffect(() => {
     ;(async () => {
-      const res = await getFavorites(restaurant.id, finalUser.uid)
-      if (res) {
-        setExists(true)
-      } else {
-        setExists(false)
-      }
+      await getFavorites(restaurant.id, finalUser.uid)
     })()
   }, [])
 

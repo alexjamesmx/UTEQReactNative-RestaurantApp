@@ -10,11 +10,12 @@ export default function MenuCard (props) {
         <View style={styles.card}>
           <View style={styles.spacing}>
             <View style={styles.bgStyles}>
-              <Text style={styles.number}>
-                #{`${comida?.id}`.padStart(3, 0)}
-              </Text>
+              {/* #{`${comida?.id}`.padStart(3, 0)} */}
+
               <Text style={styles.name}>{comida?.name}</Text>
               <Image source={{ uri: comida?.logo }} style={styles.image} />
+              <Text style={styles.price}> {comida.price}$</Text>
+              <Text style={styles.description}> {comida.description}</Text>
             </View>
           </View>
         </View>

@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Icon } from 'react-native-elements'
-import Favorites from '../screens/favorites'
+import FavoriteNavigation from './favoriteNavigation'
 import AccountNavigation from './accountNavigation'
 import RestaurantNavigation from './restaurantNavigation'
 import { appcolor } from '../constants/appcolor'
@@ -29,8 +29,9 @@ export default function Navigation () {
     >
       <Tab.Screen
         name="Favorites"
-        component={Favorites}
+        component={FavoriteNavigation}
         options={{
+          headerShown: false,
           tabBarLabel: '',
           tabBarIcon: ({ focused }) => {
             const color = focused

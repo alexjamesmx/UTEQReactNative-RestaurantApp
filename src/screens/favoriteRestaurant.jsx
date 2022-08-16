@@ -4,36 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { StyleSheet } from 'react-native'
 import MenuList from '../components/menu/MenuList'
 import { appcolor } from '../constants/appcolor'
-import { Ionicons } from '@expo/vector-icons'
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout))
 }
-export default function RestaurantNavigation (props) {
+export default function FavoriteRestaurant (props) {
   const { navigation, route } = props
   const [refreshing, setRefreshing] = useState(false)
   const [menu, setMenu] = useState([])
-  console.log(route, 'NAVIGATION,', navigation.getParent())
 
   useEffect(() => {
-    // if (route.params.comeFrom) {
-    //   navigation.setOptions({
-    //     headerLeft: () => (
-    //       <Ionicons
-    //         name="arrow-back"
-    //         size={32}
-    //         color={appcolor.appHeaderTextcolor}
-    //         style={{ marginLeft: 24 }}
-    //         onPress={() => {
-    //           navigation.reset({
-    //             index: 0,
-    //             routes: [{ name: 'Favorites' }],
-    //           })
-    //         }}
-    //       />
-    //     ),
-    //   })
-    // }
-
     ;(async () => {
       setMenu(await getMenu(route.params.id))
     })()
